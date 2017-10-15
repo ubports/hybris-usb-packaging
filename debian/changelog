@@ -1,3 +1,9 @@
+hybris-usb (0.2ubports1) xenial; urgency=medium
+
+  * Add support for upstart
+
+ -- Marius Gripsgard <marius@ubports.com>  Mon, 16 Oct 2017 00:32:05 +0200
+
 hybris-usb (0.2) unstable; urgency=medium
 
   * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
