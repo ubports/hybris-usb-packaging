@@ -60,8 +60,9 @@ ip_setup() {
 
 dhcpd_start() {
 	INTERFACES="$USB_IFACE"
-	/usr/sbin/dhcpd -4 -q -cf /etc/hybris-usb/dhcpd.conf -pf /run/hybris-usb/dhcpd4.pid -lf /run/hybris-usb/dhcpd4.lease
-
+	mkdir -p /run/hybris-usb
+	touch /run/hybris-usb/dhcpd4.leases
+	/usr/sbin/dhcpd -4 -q -cf /etc/hybris-usb/dhcpd.conf -pf /run/hybris-usb/dhcpd4.pid -lf /run/hybris-usb/dhcpd4.leases
 }
 
 usb_setup
