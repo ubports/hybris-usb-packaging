@@ -13,6 +13,9 @@ override_dh_auto_install:
 	install -d $(DESTDIR)/lib/systemd/system/
 	install -m 644 usb-tethering.service $(DESTDIR)/lib/systemd/system/
 
+	install -d $(DESTDIR)/etc/init/
+	install -m 644 usb-tethering.conf $(DESTDIR)/etc/init/
+
 	# dhcpd configuration
 	install -d $(DESTDIR)/usr/lib/tmpfiles.d/
 	install -m 644 tmpfiles.d.hybris-usb.conf $(DESTDIR)/usr/lib/tmpfiles.d/hybris-usb.conf
