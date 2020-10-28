@@ -6,7 +6,7 @@ After=local-fs.target
 Description=USB Tethering
 
 [Service]
-Type=oneshot
+Type=forking
 ExecStart=/bin/bash /usr/bin/usb-tethering
 
 [Install]
