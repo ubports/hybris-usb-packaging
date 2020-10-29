@@ -90,20 +90,31 @@ usb_info() {
 }
 
 ip_setup() {
+    local candidate
+
     if [ -n "$USB_IFACE" ]; then
-        ifconfig $USB_IFACE $LOCAL_IP
-        return
+        # If the specified interface fails, fallback to auto-detection.
+        ip link set dev "$USB_IFACE" up || USB_IFACE=""
     fi
     
-    ifconfig rndis0 $LOCAL_IP && USB_IFACE=rndis0
     if [ -z "$USB_IFACE" ]; then
-        ifconfig usb0 $LOCAL_IP && USB_IFACE=usb0
+        # Prioritise usb0 over rndis0. On some devices (e.g. Sony Xperia X),
+        # both would show up but only usb0 is usable. If, on some device, the
+        # opposite happens, then I don't know what to do.
+        for candidate in usb0 rndis0; do
+            if ip link set dev "$candidate" up; then
+                USB_IFACE="$candidate"
+                break
+            fi
+        done
     fi
 
     if [ -z "$USB_IFACE" ]; then
         usb_info "could not setup USB tethering!"
         return 1
     fi
+
+    ip address add "${LOCAL_IP}/24" dev "$USB_IFACE"
 
     usb_info "$USB_IMANUFACTURER on $USB_IFACE $LOCAL_IP"
 }
