@@ -130,7 +130,6 @@ dhcpd_start() {
 }
 
 usb_setup
-ip_setup
-dhcpd_start
+ip_setup && dhcpd_start
 
 exit $?
